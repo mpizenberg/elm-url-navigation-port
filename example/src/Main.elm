@@ -111,6 +111,8 @@ route appUrl =
 type Msg
     = GotNavigationEvent Nav.Event
     | NavigateTo AppUrl
+    | GoBack Int
+    | GoForward Int
     | GoToWizardStep WizardStep
     | IncrementCounter
     | SetName String
@@ -148,6 +150,12 @@ update msg model =
     case msg of
         NavigateTo appUrl ->
             ( model, Nav.pushUrl navCmd appUrl )
+
+        GoBack n ->
+            ( model, Nav.back navCmd n )
+
+        GoForward n ->
+            ( model, Nav.forward navCmd n )
 
         GotNavigationEvent event ->
             let
@@ -217,11 +225,23 @@ view model =
 viewNav : Html Msg
 viewNav =
     nav []
-        [ navLink (AppUrl.fromPath []) "Home"
-        , text " | "
-        , navLink (AppUrl.fromPath [ "wizard" ]) "Wizard"
-        , text " | "
-        , navLink (AppUrl.fromPath [ "about" ]) "About"
+        [ p []
+            [ text "Go back or forward: "
+            , button [ onClick (GoBack 2) ] [ text "<<" ]
+            , text " "
+            , button [ onClick (GoBack 1) ] [ text "<" ]
+            , text " "
+            , button [ onClick (GoForward 1) ] [ text ">" ]
+            , text " "
+            , button [ onClick (GoForward 2) ] [ text ">>" ]
+            ]
+        , p []
+            [ navLink (AppUrl.fromPath []) "Home"
+            , text " | "
+            , navLink (AppUrl.fromPath [ "wizard" ]) "Wizard"
+            , text " | "
+            , navLink (AppUrl.fromPath [ "about" ]) "About"
+            ]
         ]
 
 

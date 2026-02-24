@@ -46,6 +46,11 @@ export function init(ports) {
         // No sendNavigation — Elm is not notified.
         // The model is the source of truth for replaceUrl updates.
         break;
+
+      case "go":
+        history.go(msg.steps);
+        // No sendNavigation — popstate fires automatically.
+        break;
     }
   });
 

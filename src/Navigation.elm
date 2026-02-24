@@ -1,6 +1,7 @@
 module Navigation exposing
     ( CommandPort, EventPort
     , pushUrl, replaceUrl, pushState
+    , back, forward
     , Event, decoder, onEvent
     )
 
@@ -17,6 +18,8 @@ Then use [`pushUrl`](#pushUrl), [`replaceUrl`](#replaceUrl), and
 [`pushState`](#pushState) to send navigation commands, and
 [`onEvent`](#onEvent) to subscribe to navigation events.
 
+Use [`back`](#back) and [`forward`](#forward) to traverse history.
+
 Note: The History API only accepts same-origin URLs.
 All navigation commands produce relative URL strings via `AppUrl`,
 which are always same-origin by construction.
@@ -30,6 +33,11 @@ which are always same-origin by construction.
 # Commands
 
 @docs pushUrl, replaceUrl, pushState
+
+
+# History Traversal
+
+@docs back, forward
 
 
 # Events
@@ -129,6 +137,46 @@ pushState port_ state =
         (Encode.object
             [ ( "tag", Encode.string "pushState" )
             , ( "state", state )
+            ]
+        )
+
+
+{-| Go back by the given number of steps in session history.
+
+Calls `history.go(-n)`. The existing `popstate` listener handles
+the resulting navigation event automatically.
+
+    Nav.back navCmd 1 -- equivalent to pressing the browser Back button
+
+    Nav.back navCmd 2 -- go back two pages
+
+-}
+back : CommandPort msg -> Int -> Cmd msg
+back port_ n =
+    go port_ (negate (abs n))
+
+
+{-| Go forward by the given number of steps in session history.
+
+Calls `history.go(n)`. The existing `popstate` listener handles
+the resulting navigation event automatically.
+
+    Nav.forward navCmd 1 -- equivalent to pressing the browser Forward button
+
+    Nav.forward navCmd 2 -- go forward two pages
+
+-}
+forward : CommandPort msg -> Int -> Cmd msg
+forward port_ n =
+    go port_ (abs n)
+
+
+go : CommandPort msg -> Int -> Cmd msg
+go port_ steps =
+    port_
+        (Encode.object
+            [ ( "tag", Encode.string "go" )
+            , ( "steps", Encode.int steps )
             ]
         )
 
