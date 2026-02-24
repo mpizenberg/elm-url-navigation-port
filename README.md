@@ -3,6 +3,8 @@
 Port-based SPA navigation for Elm's `Browser.element`.
 
 Use this instead of `Browser.application` when you need URL routing in embedded Elm apps, micro-frontends, or any context where you want full control over history management.
+I would often suggest staying on `Browser.element` for its simplicity and flexibility, as well as its better compatibility with external libraries and browser extensions.
+As a bonus, this package enables pushing state objects to the browser history API, allowing for more complex navigation patterns, such as multi-step wizards not changing the url.
 
 Note: The browser's History API only accepts same-origin URLs. This package uses `AppUrl` from [lydell/elm-app-url](https://github.com/lydell/elm-app-url) to represent navigation targets, which produce relative URL strings by construction — always same-origin.
 

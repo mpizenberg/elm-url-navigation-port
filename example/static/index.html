@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Elm Navigation Example</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script src="elm.js"></script>
+        <script type="module">
+            import * as Navigation from "../../js/navigation.js";
+
+            var app = Elm.Main.init({
+                node: document.getElementById("app"),
+                flags: location.href,
+            });
+
+            Navigation.init({
+                navCmd: app.ports.navCmd,
+                onNavEvent: app.ports.onNavEvent,
+            });
+        </script>
+    </body>
+</html>
