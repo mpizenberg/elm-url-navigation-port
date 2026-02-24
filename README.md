@@ -75,7 +75,7 @@ update msg model =
             ( { model | page = route event.appUrl }, Cmd.none )
 ```
 
-## Three navigation patterns
+## Four navigation patterns
 
 ### 1. Page navigation — `pushUrl`
 
@@ -106,7 +106,20 @@ GotNavigationEvent event ->
     ( { model | page = Wizard (intToStep step) }, Cmd.none )
 ```
 
-### 3. Cosmetic URL update — `replaceUrl`
+### 3. History traversal — `back` / `forward`
+
+Navigate backward or forward through the session history, like the browser's back and forward buttons. Supports jumping multiple steps at once.
+
+```elm
+Nav.back navCmd 1     -- go back one page
+Nav.back navCmd 2     -- go back two pages
+Nav.forward navCmd 1  -- go forward one page
+Nav.forward navCmd 2  -- go forward two pages
+```
+
+The existing `popstate` listener handles the resulting navigation event automatically — no extra wiring needed.
+
+### 4. Cosmetic URL update — `replaceUrl`
 
 Update the URL bar without creating a history entry and **without notifying Elm**. The model stays the source of truth. Use this for display or shareability (e.g. fragments, counters).
 
@@ -163,6 +176,10 @@ onClickPreventDefault msg =
     Html.Events.preventDefaultOn "click"
         (Decode.succeed ( msg, True ))
 ```
+
+## Example
+
+See the [`example/`](example/) directory for a working demo that exercises all four navigation patterns, including back/forward buttons.
 
 ## Nav.Event
 
