@@ -77,7 +77,7 @@ update msg model =
             ( { model | page = route event.appUrl }, Cmd.none )
 ```
 
-## Four navigation patterns
+## Five navigation patterns
 
 ### 1. Page navigation — `pushUrl`
 
@@ -87,7 +87,19 @@ Standard SPA navigation. Creates a history entry and notifies Elm of the new URL
 Nav.pushUrl navCmd (AppUrl.fromPath [ "about" ])
 ```
 
-### 2. State-based navigation — `pushState`
+### 2. Page navigation with state — `pushUrlWithState`
+
+Like `pushUrl`, but also attaches a state object to the history entry. Use this when you need metadata alongside a URL change (e.g. scroll position, referrer context).
+
+```elm
+Nav.pushUrlWithState navCmd
+    (AppUrl.fromPath [ "product", "42" ])
+    (Encode.object [ ( "scrollY", Encode.int 250 ) ])
+```
+
+The state arrives in `event.state` on back/forward navigation, just like with `pushState`.
+
+### 3. State-based navigation — `pushState`
 
 Push a state object without changing the URL. Useful for wizard steps or tab flows that should support the back button but don't need distinct URLs.
 
@@ -108,7 +120,7 @@ GotNavigationEvent event ->
     ( { model | page = Wizard (intToStep step) }, Cmd.none )
 ```
 
-### 3. History traversal — `back` / `forward`
+### 4. History traversal — `back` / `forward`
 
 Navigate backward or forward through the session history, like the browser's back and forward buttons. Supports jumping multiple steps at once.
 
@@ -121,7 +133,7 @@ Nav.forward navCmd 2  -- go forward two pages
 
 The existing `popstate` listener handles the resulting navigation event automatically — no extra wiring needed.
 
-### 4. Cosmetic URL update — `replaceUrl`
+### 5. Cosmetic URL update — `replaceUrl`
 
 Update the URL bar without creating a history entry and **without notifying Elm**. The model stays the source of truth. Use this for display or shareability (e.g. fragments, counters).
 
@@ -181,7 +193,7 @@ onClickPreventDefault msg =
 
 ## Example
 
-See the [`example/`](https://github.com/mpizenberg/elm-url-navigation-port/tree/main/example) directory for a working demo that exercises all four navigation patterns, including back/forward buttons.
+See the [`example/`](https://github.com/mpizenberg/elm-url-navigation-port/tree/main/example) directory for a working demo that exercises several of these navigation patterns.
 
 ## Nav.Event
 

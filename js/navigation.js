@@ -37,7 +37,7 @@ export function init(ports) {
         break;
 
       case "pushState":
-        history.pushState(msg.state, "");
+        history.pushState(msg.state, "", msg.url);
         sendNavigation(msg.state);
         break;
 

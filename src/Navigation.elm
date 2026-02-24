@@ -1,6 +1,6 @@
 module Navigation exposing
     ( CommandPort, EventPort
-    , pushUrl, replaceUrl, pushState
+    , pushUrl, pushUrlWithState, replaceUrl, pushState
     , back, forward
     , Event, decoder, onEvent
     )
@@ -32,7 +32,7 @@ which are always same-origin by construction.
 
 # Commands
 
-@docs pushUrl, replaceUrl, pushState
+@docs pushUrl, pushUrlWithState, replaceUrl, pushState
 
 
 # History Traversal
@@ -91,6 +91,29 @@ pushUrl port_ appUrl =
         (Encode.object
             [ ( "tag", Encode.string "pushUrl" )
             , ( "url", Encode.string (AppUrl.toString appUrl) )
+            ]
+        )
+
+
+{-| Navigate to a URL with a state object, creating a new history entry.
+
+The JS companion calls `history.pushState(state, "", url)` and
+notifies Elm with both the new URL and the state. Use this when
+you need to attach metadata to a history entry alongside a URL
+change (e.g. scroll position, referrer context).
+
+    Nav.pushUrlWithState navCmd
+        (AppUrl.fromPath [ "product", "42" ])
+        (Encode.object [ ( "scrollY", Encode.int 250 ) ])
+
+-}
+pushUrlWithState : CommandPort msg -> AppUrl -> Encode.Value -> Cmd msg
+pushUrlWithState port_ appUrl state =
+    port_
+        (Encode.object
+            [ ( "tag", Encode.string "pushState" )
+            , ( "url", Encode.string (AppUrl.toString appUrl) )
+            , ( "state", state )
             ]
         )
 
