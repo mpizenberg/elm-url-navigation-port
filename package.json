@@ -1,0 +1,14 @@
+{
+  "name": "elm-url-navigation-port",
+  "version": "1.0.0",
+  "description": "JS companion for mpizenberg/elm-url-navigation-port — port-based SPA navigation for Elm",
+  "type": "module",
+  "main": "js/navigation.js",
+  "exports": {
+    ".": "./js/navigation.js"
+  },
+  "files": [
+    "js/navigation.js"
+  ],
+  "license": "BSD-3-Clause"
+}
