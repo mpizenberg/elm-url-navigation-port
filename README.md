@@ -2,6 +2,8 @@
 
 Port-based SPA navigation for Elm's `Browser.element`.
 
+[![Demo app using this package](https://github.com/user-attachments/assets/174c105f-a600-4cb7-a873-d71f381d4c10)](https://github.com/user-attachments/assets/420fd233-3313-4258-a792-5da3fd8e3c51)
+
 Use this instead of `Browser.application` when you need URL routing in embedded Elm apps, micro-frontends, or any context where you want full control over history management.
 I would often suggest staying on `Browser.element` for its simplicity and flexibility, as well as its better compatibility with external libraries and browser extensions.
 As a bonus, this package enables pushing state objects to the browser history API, allowing for more complex navigation patterns, such as multi-step wizards not changing the url.
