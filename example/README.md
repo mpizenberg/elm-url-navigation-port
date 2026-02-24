@@ -56,6 +56,9 @@ python -m http.server 8000
 
 Open `http://localhost:8000` in your browser.
 
+> Remark: For simplicity, this example symlinks the `navigation.js` file in `static/` from the parent directory.
+> On Windows, copy the file manually.
+
 ## Project structure
 
 ```
