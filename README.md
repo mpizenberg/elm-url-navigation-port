@@ -120,7 +120,9 @@ Nav.replaceUrl navCmd
 
 ## Flags
 
-Pass `location.href` as a flag so Elm can route the initial page:
+Configure your server to always serve your root `index.html` file whatever the actual url that was provided to your server.
+On cloud platforms providing static servers, such as Cloudflare Pages, there is usually an option for this.
+Then pass `location.href` as a flag so Elm can route the initial page:
 
 ```elm
 main : Program String Model Msg
