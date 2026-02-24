@@ -10,5 +10,19 @@
   "files": [
     "js/navigation.js"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpizenberg/elm-url-navigation-port.git"
+  },
+  "keywords": [
+    "elm",
+    "navigation",
+    "routing",
+    "spa",
+    "ports",
+    "history-api",
+    "browser-element",
+    "pushstate"
+  ],
   "license": "BSD-3-Clause"
 }
