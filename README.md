@@ -179,7 +179,7 @@ onClickPreventDefault msg =
 
 ## Example
 
-See the [`example/`](example/) directory for a working demo that exercises all four navigation patterns, including back/forward buttons.
+See the [`example/`](https://github.com/mpizenberg/elm-url-navigation-port/tree/main/example) directory for a working demo that exercises all four navigation patterns, including back/forward buttons.
 
 ## Nav.Event
 
